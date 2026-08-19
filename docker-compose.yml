@@ -1,0 +1,14 @@
+services:
+  purchase-tracker:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: change-me
+      DATABASE: /data/purchase-tracker.sqlite
+    volumes:
+      - purchase-data:/data
+    restart: unless-stopped
+
+volumes:
+  purchase-data:
