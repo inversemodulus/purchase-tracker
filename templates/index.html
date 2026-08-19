@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="page-heading">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Everything you’re waiting on, in one place.</p>
+    </div>
+  </div>
+
+  {% set ns = namespace(has_any=false) %}
+  {% for section, purchases in sections.items() %}
+    {% if purchases %}
+      {% set ns.has_any = true %}
+      <section class="section">
+        <div class="section-title">
+          <h2>{{ section }}</h2>
+          <span class="count">{{ purchases|length }}</span>
+        </div>
+        <div class="cards">
+          {% for purchase in purchases %}
+            <article class="purchase-card {% if purchase['status'] == 'Delivered' %}delivered{% endif %}">
+              <div class="card-top">
+                <div>
+                  <span class="store-badge {{ purchase['store']|lower }}">{{ purchase['store'] }}</span>
+                  <h3>{{ purchase['item'] }}</h3>
+                </div>
+                <span class="status">{{ purchase['status'] }}</span>
+              </div>
+
+              <div class="details">
+                {% if purchase['arrival_date'] %}
+                  <div><span>Arrives</span><strong>{{ purchase['arrival_date']|pretty_date }}</strong></div>
+                {% endif %}
+                {% if purchase['order_number'] %}
+                  <div><span>Order</span><strong>{{ purchase['order_number'] }}</strong></div>
+                {% endif %}
+                {% if purchase['tracking_number'] %}
+                  <div>
+                    <span>{{ purchase['carrier'] }}</span>
+                    {% set link = tracking_url(purchase['carrier'], purchase['tracking_number']) %}
+                    {% if link %}
+                      <a href="{{ link }}" target="_blank" rel="noopener">{{ purchase['tracking_number'] }} ↗</a>
+                    {% else %}
+                      <strong>{{ purchase['tracking_number'] }}</strong>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if purchase['notes'] %}<p class="notes">{{ purchase['notes'] }}</p>{% endif %}
+
+              <div class="actions">
+                <a href="{{ url_for('edit_purchase', purchase_id=purchase['id']) }}" class="button">Edit</a>
+                <form action="{{ url_for('delete_purchase', purchase_id=purchase['id']) }}" method="post" onsubmit="return confirm('Delete this purchase?');">
+                  <button type="submit" class="button danger">Delete</button>
+                </form>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  {% endfor %}
+
+  {% if not ns.has_any %}
+    <div class="empty-state">
+      <div class="empty-icon">📦</div>
+      <h2>No purchases yet</h2>
+      <p>Add your first Target or Walmart purchase to start tracking it.</p>
+      <a href="{{ url_for('add_purchase') }}" class="button primary">+ Add Purchase</a>
+    </div>
+  {% endif %}
+{% endblock %}
