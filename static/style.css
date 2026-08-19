@@ -1,0 +1,75 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0f17;
+  --surface: #131a24;
+  --surface-2: #1b2431;
+  --border: #293446;
+  --text: #f5f7fb;
+  --muted: #9eabbc;
+  --accent: #4f8cff;
+  --danger: #ff6b6b;
+  --success: #46c486;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.45;
+}
+a { color: #8db4ff; }
+.container { width: min(920px, calc(100% - 28px)); margin: 0 auto; }
+.topbar { position: sticky; top: 0; z-index: 10; background: rgba(11,15,23,.94); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); }
+.topbar-inner { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { color: var(--text); font-weight: 800; font-size: 1.1rem; text-decoration: none; }
+.page-heading { padding: 30px 0 18px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 5px; font-size: clamp(1.6rem, 6vw, 2.2rem); }
+.page-heading p { color: var(--muted); margin-bottom: 0; }
+.back-link { display: inline-block; margin-bottom: 8px; color: var(--muted); text-decoration: none; }
+.section { margin-bottom: 30px; }
+.section-title { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.section-title h2 { font-size: 1.05rem; margin: 0; }
+.count { min-width: 24px; height: 24px; padding: 0 7px; display: inline-grid; place-items: center; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: .8rem; }
+.cards { display: grid; gap: 12px; }
+.purchase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
+.purchase-card.delivered { opacity: .72; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.card-top h3 { margin: 7px 0 0; font-size: 1.08rem; }
+.store-badge, .status { display: inline-block; border-radius: 999px; padding: 4px 9px; font-size: .76rem; font-weight: 700; }
+.store-badge { background: var(--surface-2); }
+.store-badge.target { background: #5e1c24; color: #ffb6bd; }
+.store-badge.walmart { background: #173d6c; color: #a9d5ff; }
+.status { background: #203a31; color: #9ce0bd; white-space: nowrap; }
+.details { display: grid; gap: 8px; margin-top: 16px; }
+.details div { display: grid; grid-template-columns: 86px 1fr; align-items: baseline; gap: 8px; }
+.details span { color: var(--muted); font-size: .83rem; }
+.details strong, .details a { overflow-wrap: anywhere; font-size: .92rem; }
+.notes { margin: 14px 0 0; color: var(--muted); font-size: .9rem; }
+.actions { display: flex; gap: 8px; margin-top: 16px; }
+.actions form { margin: 0; }
+.button { appearance: none; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); border-radius: 10px; min-height: 40px; padding: 9px 13px; display: inline-flex; align-items: center; justify-content: center; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+.button.primary { background: var(--accent); border-color: var(--accent); color: white; }
+.button.danger { color: #ffaaaa; }
+.empty-state { margin-top: 55px; padding: 36px 20px; text-align: center; border: 1px dashed var(--border); border-radius: 18px; color: var(--muted); }
+.empty-state h2 { color: var(--text); }
+.empty-icon { font-size: 2rem; margin-bottom: 10px; }
+.purchase-form { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 40px; }
+.purchase-form > label, .form-grid label { display: grid; gap: 7px; margin-bottom: 15px; }
+.purchase-form label > span { font-size: .85rem; font-weight: 700; color: #c5cfdd; }
+.form-grid { display: grid; gap: 14px; }
+input, select, textarea { width: 100%; border: 1px solid var(--border); background: #0f151f; color: var(--text); border-radius: 10px; padding: 11px 12px; font: inherit; min-height: 44px; }
+textarea { resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 2px solid rgba(79,140,255,.45); border-color: var(--accent); }
+.form-actions { display: flex; gap: 9px; margin-top: 5px; }
+.flash { margin-top: 16px; padding: 11px 13px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); }
+.flash.success { border-color: #286747; color: #a9e9c8; }
+.flash.error { border-color: #7e3434; color: #ffb3b3; }
+
+@media (min-width: 640px) {
+  .form-grid.two { grid-template-columns: 1fr 1fr; }
+  .purchase-form { padding: 24px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
